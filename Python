@@ -1,0 +1,22 @@
+import openpyxl as xl
+wb =xl.load_workbook('employeedata.xlsx')
+sheet=wb['Feuil1']
+oldemail = 'helpinghands.cm'
+newemail = 'handsinhands.org'
+for i in range (2, sheet.max_row+1):
+    cell=sheet.cell(i,2)
+    if oldemail in cell.value:
+        updated_Email=(cell.value).replace(oldemail,newemail)
+        sheet.cell(i,2).value=updated_Email
+wb.save('employee_data.xlsx')
+
+import csv
+with open('employeedata.csv', newline='') as myFile:
+    reader = csv.reader(myFile)
+    myFile = ''.join([i for i in myFile])
+    myFile = myFile.replace('@helpinghands.cm', '@handsinhands.org')
+
+    output = open('employee_data.csv', 'w')
+
+    output.writelines(myFile)
+    output.close
